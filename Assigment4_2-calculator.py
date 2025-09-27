@@ -1,64 +1,84 @@
 import logging
 import math
+
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 
-input_result = False
-input_value = False
-additional_numbers = True
-numbers = []
-while  not input_result:
-    action = input('Podaj działanie, posługując się odpowiednią liczbą: 1 Dodawanie, 2 Odejmowanie, 3 Mnożenie, 4 Dzielenie:')
-    try:
-        int_action = int(action)
-        if 0 < int_action < 5:
-            input_result = True
+
+def add(a: float, b: float, *args: float) -> float:
+    logging.info(f'Dodaję: {a}, {b}, {', '.join(map(str, args[0]))}')
+    return a + b + sum(args[0])
+
+
+def sub(a: float, b: float) -> float:
+    logging.info(f'odejmuję {b} or {a}')
+    return a - b
+
+
+def mul(a: float, b: float, *args: float) -> float:
+    logging.info(f'Mnożę: {a}, {b}, {', '.join(map(str, args[0]))}')
+    return a * b * math.prod(args[0])
+
+
+def div(a: float, b: float) -> float | None:
+    (logging.info(f'Dzielę {a} przez {b}'))
+    if b != 0:
+        return a / b
+    else:
+        logging.error('Dzielenie przez 0 jest niedozwolone')
+        return None
+
+
+operations = {'1': add,
+              '2': sub,
+              '3': mul,
+              '4': div}
+
+
+def define_operation() -> object:
+    while True:
+        action = input(
+            'Podaj działanie, posługując się odpowiednią liczbą: 1 Dodawanie, 2 Odejmowanie, 3 Mnożenie, 4 Dzielenie:')
+        if action in operations.keys():
+            return operations[action]
         else:
-            print(f'Podano {int_action} co nie jest symbolem działania')
-    except:
-        print('Nie podano liczby, spróbuj ponownie\n')
-
-while not input_value:
-    fist_number = input('Podaj składnik 1 >')
-    try:
-        numbers.append(float(fist_number))
-        input_value = True
-    except:
-        print(f'Wprowadzono {fist_number}, co nie jest liczbą, spróbuj ponownie\n')
-input_value = False
-while not input_value:
-    second_number = input('Podaj składnik 2 >')
-    try:
-        numbers.append(float(second_number))
-        input_value = True
-    except:
-        print(f'Wprowadzono {second_number}, co nie jest liczbą, spróbuj ponownie\n')
-
-if int_action == 1 or int_action == 3:
-    more_numbers = input('Wybarane działa to dodawanie lub mnożenie czy chcesz podać wicej liczb - (t/n) ?')
-    if more_numbers == 't':
-        counter = 1
-        while additional_numbers:
-            next_number = input(f'Podaj składnik {counter + 2} lub jakikolwiek inny znak by zakończyć wprowadzanie >')
-            try:
-                numbers.append(float(next_number))
-                counter += 1
-            except:
-                additional_numbers = False
+            logging.info(f'Podano {action} co nie jest symbolem działania')
 
 
-match int_action:
-    case 1:
-        logging.info(f'Dodaję {numbers}')
-        logging.info(f'Wynik to {sum(numbers)}')
-    case 2:
-        logging.info(f'Odejmuję {numbers[1]} od {numbers[0]}')
-        logging.info(f'Wynik to {numbers[0] - numbers[1]}')
-    case 3:
-        logging.info(f'Mnoże {numbers}')
-        logging.info(f'Wynik to {math.prod(numbers)}')
-    case 4:
-        if numbers[1] == 0:
-            logging.error('Nie można dzielić przez ZERO')
-        else:
-            logging.info(f'Dzielę {numbers[0]} przez {numbers[1]}')
-            logging.info(f'Wynik to {numbers[0] / numbers[1]}')
+def get_component(i: int) -> float:
+    while True:
+        fist_number = input(f'Podaj składnik {i} >')
+        try:
+            number = float(fist_number)
+            return number
+        except:
+            logging.warning(f'Wprowadzono {fist_number}, co nie jest liczbą, spróbuj ponownie\n')
+
+
+def get_additional_components(operation: object) -> list[float]:
+    numbers = []
+    print(f'Wybrałeś jako działanie {operation.__name__}, możesz podać dodatkowe składniki')
+    counter = 1
+    while True:
+        next_number = input(f'Podaj składnik {counter + 2} lub jakikolwiek inny znak by zakończyć wprowadzanie >')
+        try:
+            numbers.append(float(next_number))
+            counter += 1
+        except:
+            return numbers
+
+
+if __name__ == '__main__':
+    func = define_operation()
+    a = get_component(1)
+    b = get_component(2)
+    additional_numbers = []
+    if func.__name__ == 'add' or func.__name__ == 'mul':
+        additional_numbers = get_additional_components(func)
+        result = func(a, b, additional_numbers)
+    else:
+        result = func(a, b)
+
+    if result is not None:
+        print(f'Wynik to: %.4f' % result)
+    else:
+        logging.error(f'Błąd działań')
