@@ -11,6 +11,6 @@ with open('symbole.txt', 'r') as file:
 with open('symbole_result.txt', 'w+') as file:
     for symbol in symbol_array:
         if check_palindron(symbol):
-            print(f'{symbol} palindron') 
+            print(f'{symbol} palindrom')
             file.write(symbol + '\n')
            
