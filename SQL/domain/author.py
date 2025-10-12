@@ -1,6 +1,9 @@
 class Author:
-    def __init__(self,_id: int, first_name: str, last_name: str):
-        self._id = _id
+    def __init__(self, first_name: str, last_name: str, id: int = None):
+        self.id = id
         self.first_name = first_name
         self.last_name = last_name
-        pass
+        self.books = []
+
+    def __repr__(self):
+        return f'ID:{self.id}, First Name:{self.first_name}, Family Name:{self.last_name}'
