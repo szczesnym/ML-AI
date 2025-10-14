@@ -1,7 +1,7 @@
-from unit1.SQL.domain.book import Book
-from unit1.SQL.domain.author import Author
-from unit1.SQL.repositories.AuthorRepository import AuthorRepository
-from unit1.SQL.repositories.BookRepository import BookRepository
+from ..domain.book import Book
+from ..domain.author import Author
+from ..repositories.AuthorRepository import AuthorRepository
+from ..repositories.BookRepository import BookRepository
 
 
 class LibraryService:
@@ -9,7 +9,7 @@ class LibraryService:
         self.library = library
         self.authors = authors
 
-    def add_by_str(self, book_title: str, author_first_name: str, author_last_name: str) -> int:
+    def add_by_str(self, book_title: str, author_first_name: str, author_last_name: str) -> Book:
         author = self.authors.get_by_str(first_name=author_first_name, last_name=author_last_name)
         if author :
             authors = [author]
@@ -17,8 +17,7 @@ class LibraryService:
             author = Author(first_name=author_first_name, last_name=author_last_name)
             authors = [author]
         book = Book(title=book_title, authors=authors)
-        self.library.add(book)
-        return book.id
+        return self.library.add(book)
 
     def add_book_author(self, book: Book, author: Author) -> Book:
         self.library.add(book)

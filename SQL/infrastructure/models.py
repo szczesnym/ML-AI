@@ -2,7 +2,6 @@ import datetime
 
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Table, UniqueConstraint
 from sqlalchemy.orm import relationship
-from sqlalchemy.orm import sessionmaker, declarative_base
 from .database import Base
 
 book_author = Table(
@@ -38,9 +37,9 @@ class StatusModel(Base):
     book_id = Column(Integer, ForeignKey('book.id'))
     book = relationship('BookModel', backref='status')
 
-    def __init__(self, book_id: int, status: int, timestamp: datetime.datetime):
+    def __init__(self, book_id: int, status: int, timestamp=datetime.datetime.now() ):
         self.book_id = book_id
-        self.timestamp = datetime.datetime.now()
+        self.timestamp = timestamp
         self.status = status
 
 

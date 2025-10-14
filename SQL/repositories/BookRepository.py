@@ -1,9 +1,7 @@
-from unit1.SQL.domain.author import Author
-from unit1.SQL.domain.book import Book
-from unit1.SQL.domain.status import Status
-from unit1.SQL.infrastructure.models import AuthorModel, BookModel
-from unit1.SQL.infrastructure.mapper.StatusMapper import StatusMapper
-from unit1.SQL.repositories.StatusRepository import StatusRepository
+from ..domain import Book, Author, Status
+from ..infrastructure.models import AuthorModel, BookModel
+from ..infrastructure.mapper.StatusMapper import StatusMapper
+from ..repositories import StatusRepository
 
 class BookRepository:
     def __init__(self, session, mapper):
@@ -21,19 +19,19 @@ class BookRepository:
         model_book = self.session.query(BookModel).get(book_id)
         return self.mapper.to_domain(book_model=model_book)
 
-    def add(self, book: Book) -> int:
+    def add(self, book: Book) -> Book:
         book_model = self.mapper.to_model(book, self.session)
         self.session.add(book_model)
         self.session.commit()
-        return book_model.id
+        return self.mapper.to_domain(book_model=book_model)
 
     def add_book_author(self, book: Book, author: Author) -> int:
         if author.id is not None:
             model_author = self.session.query(AuthorModel).get(author.id)
         else:
             return -1
-        model_book = self.mapper.to_model(book)
-        model_book.authors.append(author)
+        model_book = self.mapper.to_model(book, self.session)
+        model_book.authors.append(model_author)
         self.session.commit()
         return model_book.id
 

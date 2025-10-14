@@ -1,4 +1,5 @@
-from unit1.SQL.domain.status import Status
+from ..domain.status import Status
+from ..infrastructure.models import StatusModel
 
 
 class StatusRepository:
@@ -13,4 +14,4 @@ class StatusRepository:
         return model_status.id
 
     def get_by_book_id(self, status: Status, book_id: int) -> list[Status]:
-        return [self.mapper.to_domain(model_status) for model_status in self.session.query(StatusModel).filter_by(book_id=book.id)]
+        return [self.mapper.to_domain(model_status) for model_status in self.session.query(StatusModel).filter_by(book_id=book_id)]

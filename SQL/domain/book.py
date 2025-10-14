@@ -1,4 +1,4 @@
-from unit1.SQL.domain.author import Author
+from .author import Author
 
 
 class Book:
@@ -6,9 +6,12 @@ class Book:
         self.id  = id
         self.title = title
         self.available = available
-        #WITAW CHAT GPP
+        #TU był -> WITAW CHAT GPP
         #self.authors = authors
-        self.authors = [author for author in authors]
+        if authors is None:
+            self.authors = []
+        else:
+            self.authors = [author for author in authors]
 
     def add_author(self, author):
         self.authors.append(author)

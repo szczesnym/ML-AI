@@ -1,5 +1,5 @@
-from unit1.SQL.domain.author import Author
-from unit1.SQL.infrastructure.models import AuthorModel
+from ..domain.author import Author
+from ..infrastructure.models import AuthorModel
 
 class AuthorRepository:
     def __init__(self, session, mapper):

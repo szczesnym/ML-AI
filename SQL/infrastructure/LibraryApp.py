@@ -1,17 +1,13 @@
-from infrastructure.mapper.AuthorMapper import AuthorMapper
-from infrastructure.mapper.StatusMapper import StatusMapper
-from infrastructure.mapper.BookMapper import BookMapper
-from repositories.AuthorRepository import AuthorRepository
-from repositories.BookRepository import BookRepository
-from repositories.StatusRepository import StatusRepository
-from services.LibraryService import LibraryService
+from .mapper import AuthorMapper, StatusMapper, BookMapper
+from ..repositories import AuthorRepository, BookRepository, StatusRepository
+from ..services.LibraryService import LibraryService
 
 class LibraryApp:
     def __init__(self, session):
         self.session = session
         self.books = BookRepository(session, BookMapper())
         self.authors = AuthorRepository(session, AuthorMapper())
-        self.status = StatusRepository(session, StatusMapper) 
+        self.status = StatusRepository(session, StatusMapper())
         self.library = LibraryService(library=self.books,authors=self.authors) 
 
     def initialize(self) -> None:

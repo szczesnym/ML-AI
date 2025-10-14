@@ -1,9 +1,6 @@
-#from sqlalchemy import create_engine
-#from sqlalchemy.orm import sessionmaker, declarative_base
-#from infrastructure import models
 import random
-from infrastructure.database import SessionLocal, Base, engine
-from unit1.SQL.infrastructure.LibraryApp import LibraryApp
+from .infrastructure.database import SessionLocal, Base, engine
+from .infrastructure.LibraryApp import LibraryApp
 
 if __name__ == '__main__':
     Base.metadata.create_all(engine)

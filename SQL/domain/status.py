@@ -1,5 +1,5 @@
 import datetime
-from domain.book import Book
+from .book import Book
 
 class Status:
     def __init__(self, book: Book, status: int, timestamp=None, id=0):

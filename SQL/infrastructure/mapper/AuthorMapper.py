@@ -1,7 +1,5 @@
-from domain.author import Author
-from infrastructure.models import AuthorModel
-from unit1.SQL.repositories.AuthorRepository import AuthorRepository
-#from unit1.SQL
+from ...domain.author import Author
+from ..models import AuthorModel
 
 
 class AuthorMapper:

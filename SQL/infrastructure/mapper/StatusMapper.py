@@ -1,6 +1,6 @@
-from unit1.SQL.domain.status import Status
-from unit1.SQL.infrastructure.models import StatusModel
-#from unit1.SQL.infrastructureAuthorMapper import AuthorMapper
+from ...domain.status import Status
+from ..models import StatusModel
+
 
 class StatusMapper:
     @staticmethod
