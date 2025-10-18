@@ -78,7 +78,8 @@ def load_measures(filename: str) -> None:
             print(f"Inserted {len(data)} records to table 'stations'.")
 
 
-# --- Część główna programu ---
+
+
 if __name__ == '__main__':
     #load_stations('data/clean_stations.csv')
     #load_measures('data/clean_measure.csv')
