@@ -1,0 +1,39 @@
+2025-10-14
+    VERSION=0.9
+    Problemy i ryzyka (według wpływu)
+
+    Wysoki SQL/repositories/BookRepository.py:1–6, SQL/services/LibraryService.py:1–4, SQL/domain/book.py:1 itd.: Sztywno zakodowane prefiksy unit1.SQL i brak __init__.py uniemożliwiają import własnych modułów. Należy użyć importów względnych (np. from .domain.book import Book) lub przekształcić SQL w pełnoprawny pakiet.
+
+    Wysoki SQL/repositories/StatusRepository.py:15–16: Odwołuje się do StatusModel i book bez wcześniejszego importu/definicji, więc pobieranie statusów zawsze kończy się błędem. Dodatkowo metoda przyjmuje błędny argument (Status zamiast ID książki).
+    bzdura do dyskusji
+
+    Wysoki SQL/repositories/BookRepository.py:35–37: Wywołuje self.mapper.to_model(book) bez wymaganego argumentu session i przypisuje domenowego Author do relacji SQLAlchemy oczekującej AuthorModel, co powoduje błędy przypisania.
+    Zgoda - błędy, poprawione; dodane session do wywołania to_model, author zmienieone na model_author
+
+    Wysoki SQL/infrastructure/mapper/BookMapper.py:12–13: Metoda to_domain zwraca instancje AuthorModel w atrybucie Book.authors. Kod oczekujący obiektów domenowych nie będzie działał lub ujawni szczegóły persystencji.
+    Zgodada, bład; poprawione
+
+
+    Wysoki SQL/domain/book.py:5–12: authors jest opcjonalny, ale natychmiast iterowany; przekazanie None (co często ma miejsce) spowoduje TypeError. Należy domyślnie ustawić pustą listę lub walidować dane wejściowe.
+    Zgoda; Poprawione
+
+    Wysoki SQL/main.py:5: Importuje LibraryApp przez unit1.SQL..., przez co punkt wejścia jest niesprawny z tego samego powodu.
+    Importy zmienine
+
+    Średni SQL/services/LibraryService.py:20–21: Metoda zwraca book.id, ale obiekt domenowy zachowuje None, ponieważ BookRepository.add nie aktualizuje identyfikatora w przekazanej instancji.
+    Zminione BookRepositry.add() zwrca Book. LibrarryService.add_by_str() zwraca BOOK
+
+    Średni SQL/infrastructure/models.py:41–44: Konstruktor StatusModel.__init__ ignoruje przekazany znacznik czasu i zawsze używa datetime.now(). To sprzeczne z oczekiwaniami mapera i uniemożliwia zachowanie historycznych danych.
+    Zminiono typ papreamtru timeStamp na opcjonalny z domyśla wartością datetime.datetime.now()
+
+    Średni SQL/infrastructure/mapper/BookMapper.py:2: Błędny import from flask import session wprowadza nieużywaną zależność.
+    Import z Flask usunięty
+
+    Średni SQL/infrastructure/LibraryApp.py:14: Przekazuje klasę StatusMapper zamiast instancji. Metody statyczne maskują problem, ale zaburzają spójność z innymi maperami i utrudniają przyszłe refaktoryzacje.
+    Zminiono z klasy na obiekt z StatusRepository(session, StatusMapper) na StatusRepository(session, StatusMapper())
+
+    Niski SQL/domain/book.py:9–10: Pozostały komentarz (#WITAW CHAT GPP) obniża czytelność kodu.
+    !@^^&****
+
+    Niski SQL/infrastructure/mapper/AuthorMapper.py:3: Niepotrzebny import repozytorium sugeruje niedokończoną implementację – należy go usunąć lub dokończyć logikę.
+    importy poprawione
