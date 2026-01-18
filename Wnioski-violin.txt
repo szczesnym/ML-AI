@@ -1,0 +1,37 @@
+Wniosek:
+Najwięcej wypożyczeń przypada na miesiące letnie i późnowiosenne:czerwiec (6), lipiec (7), sierpień (8), wrzesień (9)
+Najmniej wypożyczeń występuje zimą:styczeń (1), luty (2), grudzień (12)
+Takie same wnioski dla całych sezonów: najwięcej wypożyczeń Lato(3) i Jesień(4), najmniej Zima(1)
+
+Dlaczego?
+Lepsze warunki pogodowe (ciepło, brak śniegu)
+Dłuższy dzień → więcej czasu na aktywność
+Sezon urlopowy i turystyczny
+Zimą: niskie temperatury, śliskie nawierzchnie, krótszy dzień
+
+Co na to wskazuje :
+lato → wysokie mediany i szerokie rozkłady
+zima → niskie mediany, mała zmienność
+
+Wniosek:
+W dni robocze (poniedziałek–piątek) rozkłady są bardziej stabilne
+W weekendy (sobota, niedziela) często:
+	większa zmienność
+	czasem wyższe maksima
+Takie same wnisoki dla danych 
+
+Dlaczego?
+Dni robocze → dojazdy do pracy (regularność)
+Weekend → jazda rekreacyjna, zależna od pogody
+
+Pogoda Wniosek:
+Najwięcej wypożyczeń przy:
+	bezchmurnie
+	lekka mgła/chmury
+Znaczny spadek przy:
+	lekki deszcz/śnieg
+	ciężkie warunki pogodowe
+
+Dlaczego?
+Jazda na rowerze silnie zależy od komfortu i bezpieczeństwa
+Deszcz i śnieg skutecznie zniechęcają użytkowników
